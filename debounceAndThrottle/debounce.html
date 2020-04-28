@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="content" style="height:150px;line-height:150px;text-align:center; color: #fff;background-color:#ccc;font-size:80px;"></div>
+    <script>
+        let num = 1;
+        let content = document.getElementById('content');
+        function count() {
+            console.log('this-->', this)
+            content.innerHTML = num++;
+        };
+        // // 第一版
+        // function debounce(func, wait) {
+        //     var timeout
+        //     return function(){
+        //         var context = this
+        //         var args = arguments
+        //         if(timeout)  clearInterval(timeout)
+        //         timeout= setTimeout(function(){
+        //             func.apply(context, args)
+        //         }, wait)
+        //     }
+        // }
+
+
+
+        // 第四版 加一个 immediate 参数 决定在第一次触发事件的时候要不要立即执行一次函数
+        // function debounce(func, wait, immediate) {
+
+        //     var timeout, result;
+
+        //     return function () {
+        //         var context = this;
+        //         var args = arguments;
+
+        //         if (timeout) clearTimeout(timeout);
+        //         if(immediate) {
+        //             var callNow = !timeout
+        //             timeout= setTimeout(function() {
+        //                 timeout= null
+        //             }, wait)
+        //             if(callNow) {
+        //                 result = func.apply(context, args)
+        //             }
+        //         }else {
+        //             timeout= setTimeout(function() {
+        //                 result = func.apply(context, args)
+        //             }, wait)
+        //         }
+                
+        //     }
+        // }
+        function debounce (func, wait, immediate) {
+            var timeout, result;
+            return function () {
+                var context =this;
+                var args = arguments;
+                if(timeout) {
+                    clearTimeout(timeout)
+                }
+                if(immediate) {
+                    var callNow = !timeout
+                    if(callNow) {
+                        result = func.apply(context, args)
+                    }
+                    timeout = setTimeout (function() {
+                        timeout = null
+                    }, wait)
+                }else{
+                    timeout = setTimeout (function(){
+                        result= func.apply(context, args)
+                    }, wait)
+                }
+            }
+        }
+        content.onmousemove = debounce(count, 100, true);
+    </script>
+</body>
+</html>

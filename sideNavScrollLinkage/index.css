@@ -1,0 +1,60 @@
+* {
+	margin:0;
+	padding:0;
+	border:none;
+}
+ul,li {
+	list-style:none;
+}
+#loutiNav {
+	position:fixed;
+	left:40px;
+	top:25%;
+	width:30px;
+	border:1px solid black;
+}
+#loutiNav li {
+	border-bottom:1px dashed #ddd;
+	width:28px;
+	height:29px;
+	line-height:29px;
+	text-align:center;
+	font-size:14px;
+	cursor:pointer;
+	position:relative;
+}
+#loutiNav li span {
+	display:none;
+	position:absolute;
+	left:0;
+	top:0;
+	width:30px;
+	height:30px;
+	font-size:12px;
+	text-align:center;
+	background-color:darkred;
+	color:white;
+}
+#loutiNav li:hover span {
+	display:block;
+}
+#loutiNav li span.active {
+	display:block;
+	background-color:white;
+	color:red;
+}
+#head,#foot,#main {
+	/* width:1000px; */
+	text-align:center;
+	font-size:40px;
+	margin:0 auto;
+}
+#head,#foot {
+	background:green;
+	height:300px;
+	line-height:300px;
+}
+#main div {
+	height:500px;
+	line-height:500px;
+}

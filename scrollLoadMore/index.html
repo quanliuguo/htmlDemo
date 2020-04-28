@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name ="viewport" content ="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <ul class="prolist">
+        <li><a href="">好经典人生语句，经典得让人心痛！</a></li>
+        <li><a href="">好经典人生语句，经典得让人心痛！</a></li>
+        <li><a href="">好经典人生语句，经典得让人心痛！</a></li>
+        <li><a href="">好经典人生语句，经典得让人心痛！</a></li>
+        <li><a href="">好经典人生语句，经典得让人心痛！</a></li>
+        <li><a href="">好经典人生语句，经典得让人心痛！</a></li>
+        <li><a href="">好经典人生语句，经典得让人心痛！</a></li>
+        <li><a href="">好经典人生语句，经典得让人心痛！</a></li>
+        <li><a href="">好经典人生语句，经典得让人心痛！</a></li>
+        <li><a href="">好经典人生语句，经典得让人心痛！</a></li>
+    </ul>
+    <script src="../lib/jquery-3.4.1.min.js"></script>
+    <script>
+    var page=1; // 页面加载到..
+    var finished=0; // 本页是否加载完成
+    var sover=0;    // 是否全部加载完毕
+
+    //如果屏幕未到整屏自动加载下一页补满
+    var setdefult=setInterval(function (){
+        if(sover==1)
+            clearInterval(setdefult);
+        else if($(".prolist").height()<$(window).height())
+            loadmore($(window));
+        else
+            clearInterval(setdefult);
+    },500);
+
+    //加载完
+    function loadover(){
+        if(sover==1)
+        {
+            var overtext="Duang～到底了";
+            $(".loadmore").remove();
+            if($(".loadover").length>0)
+            {
+                $(".loadover span").eq(0).html(overtext);
+            }
+            else
+            {
+                var txt='<div class="loadover"><span>'+overtext+'</span></div>'
+                $("body").append(txt);
+            }
+        }
+    }
+
+    //加载更多
+    var vid=0;
+    function loadmore(obj){
+        if(finished==0 && sover==0)
+        {
+            var scrollTop = $(obj).scrollTop();
+            var scrollHeight = $(document).height();
+            var windowHeight = $(obj).height();
+
+            if($(".loadmore").length==0)
+            {
+                var txt='<div class="loadmore"><span class="loading"></span>加载中..</div>'
+                $("body").append(txt);
+            }
+
+            if (scrollTop + windowHeight -scrollHeight<=50 ) {
+                //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+
+
+                //防止未加载完再次执行
+                finished=1;
+
+                var result = "";
+                for(var i = 0; i < 6; i++){
+                    vid++;
+                    result+='<li>'
+                    +'<a href="">好经典人生语句，经典得让人心痛！'+parseInt(vid)+'</a>'
+                    +'</li>'
+                }
+                setTimeout(function(){
+                    //$(".loadmore").remove();
+                    $('.prolist').append(result);
+                    page+=1;
+                    finished=0;
+                    //最后一页
+                    if(page==10)
+                    {
+                        sover=1;
+                        loadover();
+                    }
+                },1000);
+            }
+        }
+    }
+    //页面滚动执行事件
+    $(window).scroll(function (){
+        loadmore($(this));
+    });
+    </script>
+</body>
+</html>
