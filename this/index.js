@@ -240,22 +240,23 @@ fn1() */
    
 } */
 
-/* {
-    // 对象属性引用链中只有上一层或者说最后一层在调用位置中起作用。举例来说:
+// {
+//     // 对象属性引用链中只有上一层或者说最后一层在调用位置中起作用。举例来说:
 
-    function foo() {
-        console.log(this.a)
-    }
-    var obj2 = {
-        a: 42,
-        foo: foo
-    }
-    var obj1 = {
-        a:2,
-        obj2: obj2
-    }
-    obj1.obj2.foo()
-} */
+//     function foo() {
+//         console.log(this.a)
+//     }
+//     var obj2 = {
+//         a: 42,
+//         foo: foo
+//     }
+//     var obj1 = {
+//         a:2,
+//         // obj2: obj2
+//         obj2: obj2
+//     }
+//     obj1.obj2.foo()
+// }
 
 /* {
     // 隐式绑定(丢失)
@@ -321,25 +322,25 @@ fn1() */
     // setTimeout(fn, 0)
 } */
 
-/* {
+{
     // 显式绑定
     // 1.硬绑定 call apply bind
 
 
     // 2. jsAPI调用的上下文
-    function fn(ele) {
-        console.log(this)
-    }
-    var obj ={
-        name: 'objname'
-    }
+    // function fn(ele) {
+    //     console.log(this)
+    // }
+    // var obj ={
+    //     name: 'objname'
+    // }
     // for(var i =0 ;i<3;i++ ) {
     //     fn()
     // }
-    var arr =[0,1]
+    // var arr =[0,1,2]
     // arr.forEach(fn);
-    var fn2 = fn.bind(this) //可以看出bind优先级更高
-    arr.forEach(fn2, obj);
+    // var fn2 = fn.bind(this) //可以看出bind优先级更高
+    // arr.forEach(fn, obj);
     // arr.forEach(function(){
     //     console.log(this)
     // }, obj);
@@ -347,7 +348,7 @@ fn1() */
     //     console.log(this.name)
     // }, obj);
 
-} */
+}
 
 /* {
     // new 绑定
@@ -414,7 +415,7 @@ fn1() */
     // 几种绑定的优先级
     // new绑定和显式绑定的优先级比较
     function foo(params) {
-        console.log(this)
+        // console.log(this)
         this.a = params
     }
     var obj1 = {}
@@ -426,7 +427,6 @@ fn1() */
     var baz = new bar(3)
     console.log(obj1)
     console.log(baz)
-
 } */
 
 /* 
@@ -476,16 +476,19 @@ fn1() */
         a:3,
         foo:foo
     }
+
     var p = {
-        a:4
+        a: 4,
+        foo1: function() {
+           console.log(this.a)
+        }
     }
 
     // o.foo()
 
-    // (p.foo = o.foo)()
+    (p.foo1 = p.foo1) ()
     // var bar = (p.foo = o.foo)
-    // bar()
-    // p.foo()
+    bar()
 } */
 
 
@@ -572,7 +575,7 @@ fn1() */
     
 } */
 
-{
+/* {
     // 箭头函数可以像bind(...)一样确保函数的this被绑定到指定对象，此外，其重要性还体现在它用更常见的词法作用域取代了传统的this机制
     // 在es6以前，我们就已将在使用和箭头函数几乎完全一样的模式
     function foo() {
@@ -592,7 +595,41 @@ fn1() */
     // 1.只使用词法作用域并完全抛弃错误this风格的代码;
     // 2.完全采用this风格,在必要的时候使用bind(),尽量避免使用self= this 和箭头函数
     // 就是,为了规范和可维护性,尽量别混着用
+} */
+
+
+/* {
+    function A() {
+        this.n= 0;
+    }
+    A.prototype.callMe = function(){
+        console.log(this.n)
+    }
+    let a = new A()
+    document.addEventListener('click', a.callMe)
+    document.addEventListener('click', () => {
+        a.callMe()
+    })
+
+    document.addEventListener('click',function() {
+        a.callMe()
+    })
+} */
+
+var a = 0
+function foo() {
+    console.log(this)
+	var test = () => {
+        console.log(this)
+    }
+    return test
 }
+var obj = {
+    a: 1,
+    foo: foo
+}
+obj.foo()
+
 // ;(function(){
     
 // }());
