@@ -16,48 +16,65 @@
             display: flex;
             overflow: hidden;
         }
-        .nav-item{  
+        .nav-item{
             flex: 1;
             width: 33.333%;
             color: white;
             text-align: center;
             height: 48px;
             border-radius: 24px;
+            overflow: hidden;
             line-height: 48px;
             position: relative;
             font-weight: 600;
+            z-index: 20;
+        }
+        .nav-item::after{
+            content: '';
+            position: absolute;
+            display: block;
+            /* width: 150%; */
+            left: -70px;
+            right: -70px;
+            bottom: 0;
+            background-color: dodgerblue;
+            z-index: 2;
+            height: 24px;
+        } 
+        .nav-item span{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             z-index: 10;
         }
         .nav-item:active{
             color: dodgerblue;
             background-color: white;
-            z-index: 1;
+            z-index: 10;
+            overflow: visible;
         }
         .nav-item:active::after{
             content: '';
-            position: relative;
+            position: absolute;
             display: block;
-            width: 150%;
-            /* left: 50%; */
-            /* transform: translateX(-50%); */
-            /* bottom: 0; */
+            left: -70px;
+            right: -70px;
+            bottom: 0;
             background-color: white;
             z-index: 1;
             height: 24px;
-            top: -24px;
         } 
 
     </style>
 </head>
 <body>
     <div class="nav-wrap">
-        <div class="nav-item">标题一
-        </div>
-        <div class="nav-item">标题二</div>
-        <div class="nav-item">标题三</div>
+        <div class="nav-item"><span>标题一</span></div>
+        <div class="nav-item"><span>标题二</span></div>
+        <div class="nav-item"><span>标题三</span></div>
     </div>
-    <div class="content">
-
-    </div>
+    <div class="content"></div>
 </body>
 </html>
