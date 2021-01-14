@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button type="button" onclick="store.dispatch({ n:2, type:'jia'})"> + </button>
+  <span id="count-number">10</span>
+  <button type="button" onclick="store.dispatch({ n:2, type:'jian'})"> - </button>
+  <script>
+    const countDom = document.getElementById("count-number")
+    const counterState = {
+      count: 10
+    }
+
+    const reducer = (state, action) =>{
+      if(!state) {
+        return counterState
+      }
+      switch(action.type) {
+        case "jia":
+          return {
+            ...state,
+            count: state.count + action.n
+          }
+        case "jian":
+          return {
+            ...state,
+            count: state.count - action.n
+          }
+        default:
+          return {
+            ...state,
+            count: state.count
+          }
+      }
+      // return state
+    }
+
+    const createStore = (reducer) => {
+      let state = null
+      const getState = () => state
+      const listeners = []
+      const subscribe = (listener) => listeners.push(listener)
+      const dispatch = (action) => {
+        state = reducer(state, action)
+        listeners.forEach(listener => {
+          listener()
+        });
+      }
+      dispatch({})
+      return {
+        getState,
+        dispatch,
+        subscribe
+      }
+    }
+
+    const store = createStore(reducer)
+    const renderCount = () =>{
+      countDom.innerText = store.getState().count
+    }
+    store.subscribe(renderCount)
+    // renderCount()
+  </script>
+</body>
+</html>

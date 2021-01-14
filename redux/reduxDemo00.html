@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button type="button" onclick="dispatch({ n:2, type:'jia'})"> + </button>
+  <span id="count-number">10</span>
+  <button type="button" onclick="dispatch({ n:2, type:'jian'})"> - </button>
+  <script>
+    const countDom = document.getElementById("count-number")
+    const state = {
+      count: 9
+    }
+    const countRender = (state) => {
+      countDom.innerText = state.count
+    }
+    countRender(state)
+
+    
+    const changeState = (action) =>{
+      switch(action.type) {
+        case "jia":
+          state.count += action.n
+          break;
+        case "jian":
+          state.count -= action.n
+          break;
+        default:
+          break;
+      }
+    }
+    const dispatch = (action) => {
+      changeState(action)
+      countRender(state)
+    }
+  </script>
+</body>
+</html>
